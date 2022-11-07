@@ -19,17 +19,17 @@ services:
     ports:
       - "8081:8081"
 
-  server:
-    container_name: tutorial_backend
-    build:
-      context: ./
-    environment:
-      REDIS_URL: redis:6379
-      CHOKIDAR_USEPOLLING: 'true'
-      CHOKIDAR_INTERVAL: 1000
-    ports:
-     - 5000:5000
-    volumes:
-      - ./:/var/app
-    depends_on:
-      - redis
+#  server:
+#    container_name: tutorial_backend
+#    build:
+#      context: ./
+#    environment:
+#      REDIS_URL: redis:6379
+#      CHOKIDAR_USEPOLLING: 'true'
+#      CHOKIDAR_INTERVAL: 1000
+#    ports:
+#     - 5000:5000
+#    volumes:
+#      - ./:/var/app
+#    depends_on:
+#      - redis

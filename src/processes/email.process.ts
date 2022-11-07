@@ -1,4 +1,4 @@
-import { Job } from "bull";
+import {Job} from "bull";
 import nodemailer from "nodemailer";
 
 const emailProcess = async (job: Job) => {
@@ -18,14 +18,21 @@ const emailProcess = async (job: Job) => {
             rejectUnauthorized: false
         }
     });
-
+    const messageUrls = [];
     // send mail with defined transport object
-    let info = await transporter.sendMail(job.data);
+    for (let i = 0; i < 10; i++) {
+        const result = await transporter.sendMail(job.data);
+        messageUrls.push(nodemailer.getTestMessageUrl(result))
+        timeout(20000);
+    }
 
-    console.log("Message sent: %s", info.messageId);
     // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
-    return nodemailer.getTestMessageUrl(info);
+    return messageUrls;
 };
 
 export default emailProcess;
+
+function timeout(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
